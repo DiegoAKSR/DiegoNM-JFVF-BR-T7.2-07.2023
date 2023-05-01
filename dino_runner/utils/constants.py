@@ -6,7 +6,7 @@ import pygame
 TITLE = "Chrome Dino Runner"
 SCREEN_HEIGHT = 600
 SCREEN_WIDTH = 1100
-FPS = 30
+FPS = 40
 IMG_DIR = os.path.join(os.path.dirname(__file__), "..", "assets")
 
 # Assets Constants
@@ -26,6 +26,17 @@ ATTACKING = [
     pygame.image.load(os.path.join(
         IMG_DIR, "Dino/Attack/Attack_past_1/Attack_invok_6.png")),
 ]
+
+ATTACKING_2 = [
+    pygame.image.load(os.path.join(
+        IMG_DIR, "Dino/Attack/Attack_past_2/Attack_speed_1.png")),
+    pygame.image.load(os.path.join(
+        IMG_DIR, "Dino/Attack/Attack_past_2/Attack_speed_2.png")),
+    pygame.image.load(os.path.join(
+        IMG_DIR, "Dino/Attack/Attack_past_2/Attack_speed_3.png")),
+
+]
+
 
 RUNNING_LEFT = [
     pygame.image.load(os.path.join(
@@ -134,7 +145,24 @@ BIRD = [
     pygame.image.load(os.path.join(IMG_DIR, "Bird/Bird2.png")),
 ]
 
-CLOUD = pygame.image.load(os.path.join(IMG_DIR, 'Other/Cloud.png'))
+# CLOUDS
+CLOUD_1 = pygame.image.load(os.path.join(
+    IMG_DIR, 'Other/Clouds/NuvemP2Azul.png'))
+
+CLOUD_2 = pygame.image.load(os.path.join(
+    IMG_DIR, 'Other/Clouds/NuvemGrande.png'))
+
+CLOUD_3 = [
+    pygame.image.load(os.path.join(
+        IMG_DIR, 'Other/Clouds/NuvemP2Azul.png')),
+    pygame.image.load(os.path.join(
+        IMG_DIR, 'Other/Clouds/NuvemGrande.png')),
+    pygame.image.load(os.path.join(
+        IMG_DIR, 'Other/Clouds/NuvemP2Azul.png')),
+]
+
+####################
+
 SHIELD = pygame.image.load(os.path.join(IMG_DIR, 'Other/shield.png'))
 HAMMER = pygame.image.load(os.path.join(IMG_DIR, 'Other/hammer.png'))
 

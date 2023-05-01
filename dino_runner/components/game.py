@@ -1,6 +1,7 @@
 import pygame
 
 from dino_runner.components.person import Person
+from dino_runner.components.scenery_items import Scenary_Itens
 from dino_runner.utils.constants import (BG, FPS, ICON, SCREEN_HEIGHT,
                                          SCREEN_WIDTH, TITLE)
 
@@ -13,10 +14,11 @@ class Game:
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.clock = pygame.time.Clock()
         self.playing = False
-        self.game_speed = 15
+        self.game_speed = 13
         self.x_pos_bg = 0
         self.y_pos_bg = -230
         self.player = Person()
+        self.cloud = Scenary_Itens()
 
     def run(self):
         # Game loop: events - update - draw
@@ -42,6 +44,8 @@ class Game:
         self.draw_background()
 
         self.player.draw(self.screen)  # chamando draw do person
+        self.cloud.draw_cloud_1(self.screen)  # chmando draw das novens
+        self.cloud.draw_cloud_2(self.screen)  # chmando draw das novens
 
         pygame.display.update()
         pygame.display.flip()

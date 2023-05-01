@@ -1,7 +1,8 @@
 import pygame
 
-from dino_runner.utils.constants import (ATTACKING, DUCKING, JUMPING,
-                                         JUMPING_LEFT, RUNNING, RUNNING_LEFT)
+from dino_runner.utils.constants import (ATTACKING, ATTACKING_2, DUCKING,
+                                         JUMPING, JUMPING_LEFT, RUNNING,
+                                         RUNNING_LEFT)
 
 X_POS = 0
 Y_POS = 380
@@ -16,15 +17,19 @@ class Person:
         self.person_rect.x = X_POS
         self.person_rect.y = Y_POS
 
+        # Movimentação
         self.steps_count = 0
         self.person_run = True
         self.person_jump = False
         self.person_duck = False
         self.person_left = False
         self.person_right = False
-        self.person_attack = False
-
         self.jump_vel = JUMP_VEL
+        ########################
+        # Attack
+        self.person_attack = False
+        self.person_attack_2 = False
+        #########################
 
     def update(self, user_input):
 
@@ -47,8 +52,11 @@ class Person:
             self.person_right = True
             self.person_run = False
 
-        if user_input[pygame.K_0]:
+        if user_input[pygame.K_KP1]:
             self.person_attack = True
+
+        if user_input[pygame.K_KP0]:
+            self.person_attack_2 = True
 
         if self.person_run:
             self.run()
@@ -68,9 +76,13 @@ class Person:
             self.move_right()
             if not self.person_jump:
                 self.run()
+        # Atack
+
         if self.person_attack:
             self.attack()
-
+        if self.person_attack_2:
+            self.attack_2()
+        ###########
         if self.steps_count > 14:
             self.steps_count = 0
 
@@ -125,6 +137,15 @@ class Person:
         self.steps_count += 1
         if self.steps_count >= 13:
             self.person_attack = False
+            self.steps_count = 0
+
+    def attack_2(self):
+        print(self.steps_count)
+        self.image = ATTACKING_2[self.steps_count//6]
+        self.person_rect.y -= 15
+        self.steps_count += 1
+        if self.steps_count >= 13:
+            self.person_attack_2 = False
             self.steps_count = 0
 
     def draw(self, screen):
