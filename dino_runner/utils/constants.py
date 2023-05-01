@@ -161,6 +161,9 @@ CLOUD_3 = [
         IMG_DIR, 'Other/Clouds/NuvemP2Azul.png')),
 ]
 
+EVIL = pygame.image.load(os.path.join(
+    IMG_DIR, 'Other/Obstacles/middle_lane_tree9.png'))
+
 ####################
 
 SHIELD = pygame.image.load(os.path.join(IMG_DIR, 'Other/shield.png'))

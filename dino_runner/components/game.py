@@ -44,8 +44,10 @@ class Game:
         self.draw_background()
 
         self.player.draw(self.screen)  # chamando draw do person
-        self.cloud.draw_cloud_1(self.screen)  # chmando draw das novens
-        self.cloud.draw_cloud_2(self.screen)  # chmando draw das novens
+        self.cloud.draw_cloud_1(self.screen)  # chamando draw das novens
+        self.cloud.draw_cloud_2(self.screen)  # chamando draw das novens
+        self.cloud.draw_obs_tree(self.screen)  # chamando draw do EVIL
+        self.cloud.draw_obs_tree_2(self.screen)  # chamando draw do EVIL
 
         pygame.display.update()
         pygame.display.flip()
