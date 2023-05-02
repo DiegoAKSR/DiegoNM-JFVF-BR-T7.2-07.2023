@@ -5,8 +5,8 @@ from dino_runner.utils.constants import (ATTACKING, ATTACKING_2, DUCKING,
                                          RUNNING_LEFT)
 
 X_POS = 0
-Y_POS = 380
-Y_POS_DUCK = 395
+Y_POS = 450
+Y_POS_DUCK = 465
 JUMP_VEL = 8.5
 
 

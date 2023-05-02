@@ -4,7 +4,7 @@ from dino_runner.utils.constants import CLOUD_1, CLOUD_2, EVIL
 X_POS = 1300
 Y_POS = 40
 X_POS_1 = 1500
-Y_POS_EVIL = 380
+Y_POS_EVIL = 450
 
 
 class Scenary_Itens:

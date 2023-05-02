@@ -48,7 +48,6 @@ class Game:
         self.cloud.draw_cloud_2(self.screen)  # chamando draw das novens
         self.cloud.draw_obs_tree(self.screen)  # chamando draw do EVIL
         self.cloud.draw_obs_tree_2(self.screen)  # chamando draw do EVIL
-
         pygame.display.update()
         pygame.display.flip()
 
