@@ -5,7 +5,7 @@ from dino_runner.utils.constants import (ATTACKING, ATTACKING_2, DUCKING,
                                          RUNNING_LEFT)
 
 X_POS = 0
-Y_POS = 450
+Y_POS = 460
 Y_POS_DUCK = 465
 JUMP_VEL = 8.5
 
@@ -133,7 +133,7 @@ class Person:
     def attack(self):
         print(self.steps_count)
         self.image = ATTACKING[self.steps_count//3]
-        self.person_rect.y -= 15
+        self.person_rect.y -= 20
         self.steps_count += 1
         if self.steps_count >= 13:
             self.person_attack = False
@@ -142,7 +142,7 @@ class Person:
     def attack_2(self):
         print(self.steps_count)
         self.image = ATTACKING_2[self.steps_count//6]
-        self.person_rect.y -= 15
+        self.person_rect.y -= 20
         self.steps_count += 1
         if self.steps_count >= 13:
             self.person_attack_2 = False

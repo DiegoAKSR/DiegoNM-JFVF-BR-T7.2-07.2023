@@ -9,6 +9,9 @@ SCREEN_WIDTH = 1100
 FPS = 40
 IMG_DIR = os.path.join(os.path.dirname(__file__), "..", "assets")
 
+# Constants for obstacle
+OBSTACLE_Y_POS = 465
+
 # Assets Constants
 ICON = pygame.image.load(os.path.join(IMG_DIR, "DinoWallpaper.png"))
 
@@ -161,8 +164,25 @@ CLOUD_3 = [
         IMG_DIR, 'Other/Clouds/NuvemP2Azul.png')),
 ]
 
-EVIL = pygame.image.load(os.path.join(
-    IMG_DIR, 'Other/Obstacles/middle_lane_tree9.png'))
+# OBSTACLES
+
+STUMP = [pygame.image.load(os.path.join(
+    IMG_DIR, 'Other/Obstacles/middle_lane_tree9.png')),
+    pygame.image.load(os.path.join(
+        IMG_DIR, 'Other/Obstacles/stumps_two.png')),
+    pygame.image.load(os.path.join(
+        IMG_DIR, 'Other/Obstacles/middle_lane_tree9.png')),
+]
+
+STUMP_LARGE = [pygame.image.load(os.path.join(
+    IMG_DIR, 'Other/Obstacles/stump_large.png'))]
+
+
+MOSQUITO = [
+    pygame.image.load(os.path.join(IMG_DIR, 'mosquito/mosquito_1.png')),
+    pygame.image.load(os.path.join(IMG_DIR, 'mosquito/mosquito_2.png')),
+    pygame.image.load(os.path.join(IMG_DIR, 'mosquito/mosquito_3.png')),
+]
 
 ####################
 

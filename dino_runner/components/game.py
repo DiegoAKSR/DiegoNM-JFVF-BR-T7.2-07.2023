@@ -1,7 +1,9 @@
 import pygame
 
+from dino_runner.components.flying_obstacle.flying_manager import \
+    Flying_manager
+from dino_runner.components.obstacles.obstacle_manager import ObstacleManager
 from dino_runner.components.person import Person
-from dino_runner.components.scenery_items import Scenary_Itens
 from dino_runner.utils.constants import (BG, FPS, ICON, SCREEN_HEIGHT,
                                          SCREEN_WIDTH, TITLE)
 
@@ -18,7 +20,8 @@ class Game:
         self.x_pos_bg = 0
         self.y_pos_bg = -230
         self.player = Person()
-        self.cloud = Scenary_Itens()
+        self.obstacle_manager = ObstacleManager()
+        self.flying_manager = Flying_manager()
 
     def run(self):
         # Game loop: events - update - draw
@@ -37,6 +40,8 @@ class Game:
     def update(self):
         user_input = pygame.key.get_pressed()
         self.player.update(user_input)  # chamando metodo update do person
+        self.obstacle_manager.update(self)
+        self.flying_manager.update(self)  # chamando update do manager mosquito
 
     def draw(self):
         self.clock.tick(FPS)
@@ -44,10 +49,10 @@ class Game:
         self.draw_background()
 
         self.player.draw(self.screen)  # chamando draw do person
-        self.cloud.draw_cloud_1(self.screen)  # chamando draw das novens
-        self.cloud.draw_cloud_2(self.screen)  # chamando draw das novens
-        self.cloud.draw_obs_tree(self.screen)  # chamando draw do EVIL
-        self.cloud.draw_obs_tree_2(self.screen)  # chamando draw do EVIL
+        # self.cloud.draw_cloud_1(self.screen)  # chamando draw das novens
+        # self.cloud.draw_cloud_2(self.screen)  # chamando draw das novens
+        self.obstacle_manager.draw(self.screen)
+        self.flying_manager.draw(self.screen)  # chamando manager do mosquito
         pygame.display.update()
         pygame.display.flip()
 
