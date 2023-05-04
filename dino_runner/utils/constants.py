@@ -179,9 +179,9 @@ STUMP_LARGE = [pygame.image.load(os.path.join(
 
 
 MOSQUITO = [
-    pygame.image.load(os.path.join(IMG_DIR, 'mosquito/mosquito_1.png')),
-    pygame.image.load(os.path.join(IMG_DIR, 'mosquito/mosquito_2.png')),
-    pygame.image.load(os.path.join(IMG_DIR, 'mosquito/mosquito_3.png')),
+    pygame.image.load(os.path.join(IMG_DIR, 'mosquito/mosquito_11.png')),
+    pygame.image.load(os.path.join(IMG_DIR, 'mosquito/mosquito_22.png')),
+    pygame.image.load(os.path.join(IMG_DIR, 'mosquito/mosquito_33.png')),
 ]
 
 ####################
@@ -194,5 +194,28 @@ HAMMER = pygame.image.load(os.path.join(IMG_DIR, 'Other/hammer.png'))
 BG = pygame.image.load(os.path.join(IMG_DIR, 'Other/mapa2.png'))
 
 HEART = pygame.image.load(os.path.join(IMG_DIR, 'Other/SmallHeart.png'))
+
+HEART_LIFE = [pygame.image.load(os.path.join(IMG_DIR, 'life/life_3.png')),
+              pygame.image.load(os.path.join(IMG_DIR, 'life/life_2.png')),
+              pygame.image.load(os.path.join(IMG_DIR, 'life/life_1.png')),
+              pygame.image.load(os.path.join(IMG_DIR, 'life/life_0.png')),
+              pygame.image.load(os.path.join(IMG_DIR, 'life/life_01.png')),
+              ]
+
+DEAD_PERSON = [pygame.image.load(os.path.join(IMG_DIR, 'Dino/Dead/dead_1.png')),
+               pygame.image.load(os.path.join(
+                   IMG_DIR, 'Dino/Dead/dead_2.png')),
+               pygame.image.load(os.path.join(
+                   IMG_DIR, 'Dino/Dead/dead_3.png')),
+               pygame.image.load(os.path.join(
+                   IMG_DIR, 'Dino/Dead/dead_4.png')),
+               pygame.image.load(os.path.join(
+                   IMG_DIR, 'Dino/Dead/dead_5.png')),
+               pygame.image.load(os.path.join(
+                   IMG_DIR, 'Dino/Dead/dead_5.png')),
+
+
+               ]
+
 
 DEFAULT_TYPE = "default"

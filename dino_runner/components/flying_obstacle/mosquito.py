@@ -2,7 +2,7 @@ import pygame
 
 from dino_runner.utils.constants import MOSQUITO
 
-X_POS = 1200
+X_POS = 1500
 Y_POS = 440
 
 
@@ -23,6 +23,9 @@ class Mosquito_per:
         self.mosquito_move1 = False
         self.mosquito_move2 = False
         self.runer = True
+
+        self.collisions = 0
+        self.last_collision_resolved = True
 
     def update(self, game):
 
@@ -46,15 +49,26 @@ class Mosquito_per:
             self.move2()
 
         if game.player.person_rect.colliderect(self.mosquito_rect):
+            if self.last_collision_resolved:
+                self.collisions += 1
+                print(self.collisions)
+                game.player.person_life.cont += 1
+                self.last_collision_resolved = False
+        else:
+            self.last_collision_resolved = True
+
+        '''if game.player.person_rect.colliderect(self.mosquito_rect):
 
             if game.player.person_attack == True:
 
                 print('top')
 
             else:
-                pygame.time.delay(10)
-                game.playing = False
-
+                pass
+                # game.life.cont += 1
+                # pygame.time.delay(10)
+                # game.playing = False
+'''
         if self.steps_count > 5:
             self.steps_count = 0
 
@@ -71,6 +85,9 @@ class Mosquito_per:
         self.mosquito_rect.x -= 3
         if self.mosquito_rect.x < -50:
             self.mosquito_rect.x = X_POS
+
+    def mosquito_dead(self):
+        pass
 
     def draw(self, screen):
         screen.blit(

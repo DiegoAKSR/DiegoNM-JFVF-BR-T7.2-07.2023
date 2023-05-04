@@ -2,6 +2,7 @@ import pygame
 
 from dino_runner.components.flying_obstacle.flying_manager import \
     Flying_manager
+from dino_runner.components.life import Life
 from dino_runner.components.obstacles.obstacle_manager import ObstacleManager
 from dino_runner.components.person import Person
 from dino_runner.utils.constants import (BG, FPS, ICON, SCREEN_HEIGHT,
@@ -16,6 +17,7 @@ class Game:
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.clock = pygame.time.Clock()
         self.playing = False
+        self.executing = False
         self.game_speed = 13
         self.x_pos_bg = 0
         self.y_pos_bg = -230
@@ -23,14 +25,32 @@ class Game:
         self.obstacle_manager = ObstacleManager()
         self.flying_manager = Flying_manager()
 
+        # Pontuação
+        self.score = 0
+
+    def execute(self):
+        self.executing = True
+
+        while self.executing:
+            if not self.playing:
+                self.show_menu()
+
+        pygame.display.quit()
+        pygame.quit()
+
     def run(self):
         # Game loop: events - update - draw
         self.playing = True
+        self.reset_game()
         while self.playing:
             self.events()
             self.update()
             self.draw()
-        pygame.quit()
+
+    def reset_game(self):
+        self.score = 0
+        self.game_speed = 13
+        self.obstacle_manager.obstacles.clear()
 
     def events(self):
         for event in pygame.event.get():
@@ -39,9 +59,17 @@ class Game:
 
     def update(self):
         user_input = pygame.key.get_pressed()
-        self.player.update(user_input)  # chamando metodo update do person
+        # chamando metodo update do person
+        self.player.update(user_input, self)
         self.obstacle_manager.update(self)
         self.flying_manager.update(self)  # chamando update do manager mosquito
+        self.update_score()
+
+    def update_score(self):
+        self.score += 1
+
+        if self.score % 100 == 0:
+            self.game_speed += 1
 
     def draw(self):
         self.clock.tick(FPS)
@@ -53,8 +81,20 @@ class Game:
         # self.cloud.draw_cloud_2(self.screen)  # chamando draw das novens
         self.obstacle_manager.draw(self.screen)
         self.flying_manager.draw(self.screen)  # chamando manager do mosquito
+        self.draw_score()
+
         pygame.display.update()
         pygame.display.flip()
+
+    def draw_score(self):
+        FONT_STYLE = "freesansbold.ttf"
+        font = pygame.font.Font(FONT_STYLE, 22)
+        text = font.render(f"Score: {self.score}", True, (0, 0, 0))
+
+        text_rect = text.get_rect()
+        text_rect.center = (1000, 50)
+
+        self.screen.blit(text, text_rect)
 
     def draw_background(self):
         image_width = BG.get_width()
@@ -64,3 +104,38 @@ class Game:
             self.screen.blit(BG, (image_width + self.x_pos_bg, self.y_pos_bg))
             self.x_pos_bg = 0
         self.x_pos_bg -= self.game_speed
+
+    def show_menu(self):
+        self.screen.fill((255, 255, 255))
+
+        half_screen_height = SCREEN_HEIGHT // 2
+        half_screen_width = SCREEN_WIDTH // 2
+
+        FONT_STYLE = "freesansbold.ttf"
+        font = pygame.font.Font(FONT_STYLE, 22)
+        text = font.render("Press any key to start", True, (0, 0, 0))
+
+        text_rect = text.get_rect()
+        text_rect.center = (half_screen_width, half_screen_height)
+        self.screen.blit(text, text_rect)
+
+        self.death_count = "dfsdfsd"
+        text = font.render(f"Death: {self.death_count}", True, (255, 0, 0))
+        text_rect.center = (100, 100)
+        self.screen.blit(text, text_rect)
+
+        pygame.display.flip()
+
+        self.handle_events_on_menu()
+
+    def handle_events_on_menu(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.playing = False
+                self.executing = False
+
+            elif event.type == pygame.KEYDOWN:
+                self.run()
+
+        #   def reset_obstacles(self):
+        #   self.obstacle_manager.obstacles.clear()

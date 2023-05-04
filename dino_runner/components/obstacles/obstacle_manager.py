@@ -10,9 +10,10 @@ class ObstacleManager:
 
     def __init__(self):
         self.obstacles = []
+        self.collisions = 0
+        self.last_collision_resolved = True
 
     def update(self, game):
-
         if len(self.obstacles) == 0:
 
             self.rand = random.randint(0, 1)
@@ -27,9 +28,13 @@ class ObstacleManager:
             obstacle.update(game.game_speed, self.obstacles)
 
             if game.player.person_rect.colliderect(obstacle.rect):
-                pygame.time.delay(10)
-                game.playing = False
-                break
+                if self.last_collision_resolved:
+                    self.collisions += 1
+                    print(self.collisions)
+                    game.player.person_life.cont += 1
+                    self.last_collision_resolved = False
+            else:
+                self.last_collision_resolved = True
 
     def draw(self, screen):
         for obstacle in self.obstacles:

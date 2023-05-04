@@ -1,8 +1,9 @@
 import pygame
 
-from dino_runner.utils.constants import (ATTACKING, ATTACKING_2, DUCKING,
-                                         JUMPING, JUMPING_LEFT, RUNNING,
-                                         RUNNING_LEFT)
+from dino_runner.components.life import Life
+from dino_runner.utils.constants import (ATTACKING, ATTACKING_2, DEAD_PERSON,
+                                         DUCKING, JUMPING, JUMPING_LEFT,
+                                         RUNNING, RUNNING_LEFT)
 
 X_POS = 0
 Y_POS = 460
@@ -31,8 +32,27 @@ class Person:
         self.person_attack_2 = False
         #########################
 
-    def update(self, user_input):
+        # LIFE
+        self.person_life = Life()
+        self.dead_person = False
+        self.dead_cont = 0
 
+    def update(self, user_input, game):
+
+        ################ LIFE ######
+        self.person_life.damage_life()
+
+        if self.person_life.dead:
+            # pygame.time.delay(500)
+            self.dead_person = True
+            self.person_run = False
+            self.person_attack = False
+            self.person_attack_2 = False
+            self.person_duck = False
+            self.person_jump = False
+
+        ##############################
+        ###### CONTROL################
         if user_input[pygame.K_UP]:
             self.person_jump = True
             self.person_run = False
@@ -67,6 +87,10 @@ class Person:
         elif self.person_duck:
             self.duck()
 
+        ######### DEAD#############
+        if self.dead_person:
+            self.person_dead(game)
+        #########################
         if self.person_left:
             self.move_left()
             if not self.person_jump:
@@ -76,13 +100,14 @@ class Person:
             self.move_right()
             if not self.person_jump:
                 self.run()
-        # Atack
+        ##########################
+        ######## Atack#############
 
         if self.person_attack:
             self.attack()
         if self.person_attack_2:
             self.attack_2()
-        ###########
+        #########################
         if self.steps_count > 14:
             self.steps_count = 0
 
@@ -116,7 +141,6 @@ class Person:
             self.jump_vel = JUMP_VEL
 
     def move_left(self):
-        print("chegou left", self.person_rect.x)
 
         if self.person_rect.x >= 0:
             if self.person_left:
@@ -124,14 +148,12 @@ class Person:
         self.person_left = False
 
     def move_right(self):
-        print("chegou right", self.person_rect.x)
         if self.person_rect.x <= 1000:
             if self.person_right:
                 self.person_rect.x += 7
         self.person_right = False
 
     def attack(self):
-        print(self.steps_count)
         self.image = ATTACKING[self.steps_count//3]
         self.person_rect.y -= 20
         self.steps_count += 1
@@ -140,7 +162,6 @@ class Person:
             self.steps_count = 0
 
     def attack_2(self):
-        print(self.steps_count)
         self.image = ATTACKING_2[self.steps_count//6]
         self.person_rect.y -= 20
         self.steps_count += 1
@@ -148,5 +169,21 @@ class Person:
             self.person_attack_2 = False
             self.steps_count = 0
 
+    def person_dead(self, game):
+        self.image = DEAD_PERSON[self.dead_cont]
+        self.steps_count += 1
+        self.dead_cont += 1
+        pygame.time.delay(150)
+        if self.dead_cont >= 3:
+            self.person_rect.y = 490
+            pygame.time.delay(300)
+        if self.dead_cont == 6:
+            pygame.time.delay(400)
+            self.person_life.dead = False
+            self.person_life.cont = 0
+            self.dead_cont = 0
+            game.playing = False
+
     def draw(self, screen):
+        self.person_life.draw(screen)
         screen.blit(self.image, (self.person_rect.x, self.person_rect.y))
