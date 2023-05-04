@@ -132,21 +132,6 @@ DUCKING_HAMMER = [
     pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoDuck2.png")),
 ]
 
-SMALL_CACTUS = [
-    pygame.image.load(os.path.join(IMG_DIR, "Cactus/SmallCactus1.png")),
-    pygame.image.load(os.path.join(IMG_DIR, "Cactus/SmallCactus2.png")),
-    pygame.image.load(os.path.join(IMG_DIR, "Cactus/SmallCactus3.png")),
-]
-LARGE_CACTUS = [
-    pygame.image.load(os.path.join(IMG_DIR, "Cactus/LargeCactus1.png")),
-    pygame.image.load(os.path.join(IMG_DIR, "Cactus/LargeCactus2.png")),
-    pygame.image.load(os.path.join(IMG_DIR, "Cactus/LargeCactus3.png")),
-]
-
-BIRD = [
-    pygame.image.load(os.path.join(IMG_DIR, "Bird/Bird1.png")),
-    pygame.image.load(os.path.join(IMG_DIR, "Bird/Bird2.png")),
-]
 
 # CLOUDS
 CLOUD_1 = pygame.image.load(os.path.join(
@@ -189,10 +174,12 @@ MOSQUITO = [
 SHIELD = pygame.image.load(os.path.join(IMG_DIR, 'Other/shield.png'))
 HAMMER = pygame.image.load(os.path.join(IMG_DIR, 'Other/hammer.png'))
 
-# BG = pygame.image.load(os.path.join(IMG_DIR, 'Other/Track.png'))
-# BG = pygame.image.load(os.path.join(IMG_DIR, 'Other/Mapa1.png'))
+########### BACKGROUND###############################
 BG = pygame.image.load(os.path.join(IMG_DIR, 'Other/mapa2.png'))
-
+BG_2 = pygame.image.load(os.path.join(IMG_DIR, 'Other/mapa3.png'))
+BG_TER = pygame.image.load(os.path.join(IMG_DIR, 'Other/mapa3_ter.png'))
+BG_CLOUD = pygame.image.load(os.path.join(IMG_DIR, 'Other/Cloud_2.png'))
+#####################################################################
 HEART = pygame.image.load(os.path.join(IMG_DIR, 'Other/SmallHeart.png'))
 
 HEART_LIFE = [pygame.image.load(os.path.join(IMG_DIR, 'life/life_3.png')),

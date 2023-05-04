@@ -173,15 +173,18 @@ class Person:
         self.image = DEAD_PERSON[self.dead_cont]
         self.steps_count += 1
         self.dead_cont += 1
-        pygame.time.delay(150)
+        self.person_rect.x += 10
+        pygame.time.delay(50)
         if self.dead_cont >= 3:
             self.person_rect.y = 490
-            pygame.time.delay(300)
         if self.dead_cont == 6:
+            # self.image = DEAD_PERSON[5]
             pygame.time.delay(400)
             self.person_life.dead = False
             self.person_life.cont = 0
             self.dead_cont = 0
+            self.dead_person = False
+            self.person_rect.x = 0
             game.playing = False
 
     def draw(self, screen):
