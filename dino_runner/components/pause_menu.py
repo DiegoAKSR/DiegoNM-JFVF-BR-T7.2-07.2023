@@ -34,23 +34,13 @@ class Pause:
 
             FONT_STYLE = "freesansbold.ttf"
             font = pygame.font.Font(FONT_STYLE, 22)
-            text = font.render("Press ENTER to start", True, (0, 0, 0))
-
+            text = font.render(
+                f" {game.death_count}", True, (0, 0, 0))
             text_rect = text.get_rect()
-            text_rect.center = (half_screen_width, half_screen_height)
+            text_rect.center = (half_screen_width - 178,
+                                half_screen_height - 192)
             self.screen.blit(text, text_rect)
-
-            if game.player.life_person > 0:
-                text = font.render(
-                    "Press C to continue", True, (0, 0, 0))
-                text_rect.center = (half_screen_width,
-                                    half_screen_height + 100)
-                self.screen.blit(text, text_rect)
 
             game.death_count = game.player.life_person
-            text = font.render(
-                f"Remaining Lives: {game.death_count}", True, (0, 0, 0))
-            text_rect.center = (320, 100)
-            self.screen.blit(text, text_rect)
             pygame.display.flip()
             game.handle_events_on_menu()

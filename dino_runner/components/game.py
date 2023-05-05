@@ -7,7 +7,7 @@ from dino_runner.components.obstacles.obstacle_manager import ObstacleManager
 from dino_runner.components.pause_menu import Pause
 from dino_runner.components.person import Person
 from dino_runner.components.power_ups.power_up_manager import PowerUpManager
-from dino_runner.utils.constants import (DEFAULT_TYPE, FPS, ICON,
+from dino_runner.utils.constants import (DEFAULT_TYPE, FPS, ICON, MENU_PAUSE,
                                          SCREEN_HEIGHT, SCREEN_WIDTH, TITLE)
 
 
@@ -34,6 +34,8 @@ class Game:
 
         self.reset = True
         self.pause = False
+
+        self.death_count = self.player.life_person
 
     def execute(self):
         self.executing = True
