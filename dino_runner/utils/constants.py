@@ -3,7 +3,7 @@ import os
 import pygame
 
 # Global Constants
-TITLE = "Chrome Dino Runner"
+TITLE = "Winifred the Running"
 SCREEN_HEIGHT = 600
 SCREEN_WIDTH = 1100
 FPS = 40
