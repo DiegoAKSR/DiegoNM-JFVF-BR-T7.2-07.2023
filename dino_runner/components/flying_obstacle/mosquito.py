@@ -15,14 +15,15 @@ class Mosquito_per:
     def __init__(self):
         self.image = MOSQUITO[0]
         self.mosquito_rect = self.image.get_rect()
-        self.mosquito_rect.x = float(X_POS)
+        self.mosquito_rect.x = X_POS
         self.mosquito_rect.y = Y_POS
 
         self.steps_count = 0
-        self.list_mosquitos = []
+
         self.mosquito_move1 = False
         self.mosquito_move2 = False
         self.runer = True
+        self.damage = False
 
         self.collisions = 0
         self.last_collision_resolved = True
@@ -49,11 +50,19 @@ class Mosquito_per:
             self.move2()
 
         if game.player.person_rect.colliderect(self.mosquito_rect):
-            if self.last_collision_resolved:
-                self.collisions += 1
-                print(self.collisions)
-                game.player.person_life.cont += 1
-                self.last_collision_resolved = False
+            if not game.player.has_power_up or not game.player.type == "default":
+                if self.last_collision_resolved:
+                    self.collisions += 1
+                    print(self.collisions)
+                    game.player.person_life.cont += 1
+                    self.last_collision_resolved = False
+
+                if game.player.person_attack:
+                    self.mosquito_rect.x = X_POS
+                    self.damage = True
+            else:
+                self.mosquito_rect.x = X_POS
+
         else:
             self.last_collision_resolved = True
 
@@ -80,14 +89,10 @@ class Mosquito_per:
 
     def run(self):
         self.image = MOSQUITO[self.steps_count//2]
-        # self.mosquito_rect.y = Y_POS
         self.steps_count += 1
         self.mosquito_rect.x -= 3
         if self.mosquito_rect.x < -50:
             self.mosquito_rect.x = X_POS
-
-    def mosquito_dead(self):
-        pass
 
     def draw(self, screen):
         screen.blit(

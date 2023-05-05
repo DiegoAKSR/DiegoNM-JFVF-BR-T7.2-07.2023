@@ -169,18 +169,50 @@ MOSQUITO = [
     pygame.image.load(os.path.join(IMG_DIR, 'mosquito/mosquito_33.png')),
 ]
 
-####################
+# ICONS SWORDS
+ICON_SWORD_ACTIVE = [pygame.image.load(os.path.join(IMG_DIR, 'Other/sword/sword.png')),
+                     pygame.image.load(os.path.join(
+                         IMG_DIR, 'Other/sword/sword_active.png')),
+                     ]
 
-SHIELD = pygame.image.load(os.path.join(IMG_DIR, 'Other/shield.png'))
+ICON_SWORD_INATIVE = [pygame.image.load(os.path.join(IMG_DIR, 'Other/sword/sword_inative.png')),
+                      pygame.image.load(os.path.join(
+                          IMG_DIR, 'Other/sword/sword_inative_2.png')),
+                      ]
+
+ICON_SWORD_TWO_ACTIVE = [pygame.image.load(os.path.join(IMG_DIR, 'Other/sword/sword2.png')),
+                         pygame.image.load(os.path.join(
+                             IMG_DIR, 'Other/sword/sword2_active.png')),
+                         ]
+
+ICON_SWORD_TWO_INATIVE = [pygame.image.load(os.path.join(IMG_DIR, 'Other/sword/sword2_inative.png')),
+                          pygame.image.load(os.path.join(
+                              IMG_DIR, 'Other/sword/sword2_inative_2.png')),
+                          ]
+
+
+# SHIELD
+
+SHIELD = pygame.image.load(os.path.join(
+    IMG_DIR, 'Other/power_up_img/Icon7.png'))
+
+ICON_SHIELD = [pygame.image.load(os.path.join(
+    IMG_DIR, 'Other/power_up_img/shield.png')),
+    pygame.image.load(os.path.join(
+        IMG_DIR, 'Other/power_up_img/no_shield.png')),
+]
+
+ICON_LIFE_UP = pygame.image.load(os.path.join(
+    IMG_DIR, 'Other/power_up_img/Icon1.png'))
+
 HAMMER = pygame.image.load(os.path.join(IMG_DIR, 'Other/hammer.png'))
 
 ########### BACKGROUND###############################
-BG = pygame.image.load(os.path.join(IMG_DIR, 'Other/mapa2.png'))
 BG_2 = pygame.image.load(os.path.join(IMG_DIR, 'Other/mapa3.png'))
 BG_TER = pygame.image.load(os.path.join(IMG_DIR, 'Other/mapa3_ter.png'))
 BG_CLOUD = pygame.image.load(os.path.join(IMG_DIR, 'Other/Cloud_2.png'))
 #####################################################################
-HEART = pygame.image.load(os.path.join(IMG_DIR, 'Other/SmallHeart.png'))
+
 
 HEART_LIFE = [pygame.image.load(os.path.join(IMG_DIR, 'life/life_3.png')),
               pygame.image.load(os.path.join(IMG_DIR, 'life/life_2.png')),
@@ -205,4 +237,8 @@ DEAD_PERSON = [pygame.image.load(os.path.join(IMG_DIR, 'Dino/Dead/dead_1.png')),
                ]
 
 
+MENU_PAUSE = pygame.image.load(os.path.join(
+    IMG_DIR, 'Other/menu/menu_pause.png'))
+
 DEFAULT_TYPE = "default"
+LIFE_TYPE = "life"

@@ -1,5 +1,6 @@
 import pygame
 
+from dino_runner.components.icons import Icons
 from dino_runner.components.life import Life
 from dino_runner.utils.constants import (ATTACKING, ATTACKING_2, DEAD_PERSON,
                                          DUCKING, JUMPING, JUMPING_LEFT,
@@ -35,12 +36,25 @@ class Person:
         # LIFE
         self.person_life = Life()
         self.dead_person = False
+        self.life_person = 3
         self.dead_cont = 0
 
+        # ICONS
+        self.icons = Icons()
+
+        # power up
+        self.has_power_up = False
+        self.type = ''
+
     def update(self, user_input, game):
+        # limita eixo Y
+        self.y_limited()
+
+        # ICONS
+        self.icons.update(game)
 
         ################ LIFE ######
-        self.person_life.damage_life()
+        self.person_life.damage_life(game)
 
         if self.person_life.dead:
             # pygame.time.delay(500)
@@ -71,42 +85,54 @@ class Person:
         if user_input[pygame.K_RIGHT]:
             self.person_right = True
             self.person_run = False
-
+        # Attack
         if user_input[pygame.K_KP1]:
-            self.person_attack = True
+            if self.icons.active_set:
+                self.person_attack = True
+            else:
+                self.icons.inative_show = 1
+                self.icons.inative_one()
 
         if user_input[pygame.K_KP0]:
-            self.person_attack_2 = True
+            if self.icons.active_set_2:
+                self.person_attack_2 = True
+            else:
+                self.icons.inative_show_2 = 1
+                self.icons.inative_two()
 
-        if self.person_run:
-            self.run()
-
-        elif self.person_jump:
-            self.jump()
-
-        elif self.person_duck:
-            self.duck()
-
-        ######### DEAD#############
+         ######### DEAD#############
         if self.dead_person:
             self.person_dead(game)
         #########################
-        if self.person_left:
-            self.move_left()
-            if not self.person_jump:
-                self.run_left()
 
-        if self.person_right:
-            self.move_right()
-            if not self.person_jump:
+        # VERIFICA SE ESTA MORTO
+        if not self.dead_person:
+
+            if self.person_run:
                 self.run()
-        ##########################
-        ######## Atack#############
 
-        if self.person_attack:
-            self.attack()
-        if self.person_attack_2:
-            self.attack_2()
+            elif self.person_jump:
+                self.jump()
+
+            elif self.person_duck:
+                self.duck()
+
+            if self.person_left:
+                self.move_left()
+                if not self.person_jump:
+                    self.run_left()
+
+            if self.person_right:
+                self.move_right()
+                if not self.person_jump:
+                    self.run()
+            ##########################
+            ######## Atack#############
+
+            if self.person_attack:
+                self.attack()
+            if self.person_attack_2:
+                self.attack_2()
         #########################
         if self.steps_count > 14:
             self.steps_count = 0
@@ -153,6 +179,10 @@ class Person:
                 self.person_rect.x += 7
         self.person_right = False
 
+    def y_limited(self):
+        if self.person_rect.y < 466:
+            self.person_rect.y += 2
+
     def attack(self):
         self.image = ATTACKING[self.steps_count//3]
         self.person_rect.y -= 20
@@ -185,8 +215,12 @@ class Person:
             self.dead_cont = 0
             self.dead_person = False
             self.person_rect.x = 0
+            self.life_person -= 1
             game.playing = False
 
     def draw(self, screen):
         self.person_life.draw(screen)
         screen.blit(self.image, (self.person_rect.x, self.person_rect.y))
+        self.icons.draw(screen)
+        if self.has_power_up and self.type == 'default':
+            self.icons.icon_shield_draw(screen)

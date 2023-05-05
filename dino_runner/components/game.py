@@ -1,11 +1,13 @@
 import pygame
 
+from dino_runner.components.background_manager import Background_manager
 from dino_runner.components.flying_obstacle.flying_manager import \
     Flying_manager
-from dino_runner.components.life import Life
 from dino_runner.components.obstacles.obstacle_manager import ObstacleManager
+from dino_runner.components.pause_menu import Pause
 from dino_runner.components.person import Person
-from dino_runner.utils.constants import (BG, BG_2, BG_CLOUD, BG_TER, FPS, ICON,
+from dino_runner.components.power_ups.power_up_manager import PowerUpManager
+from dino_runner.utils.constants import (DEFAULT_TYPE, FPS, ICON,
                                          SCREEN_HEIGHT, SCREEN_WIDTH, TITLE)
 
 
@@ -19,24 +21,28 @@ class Game:
         self.playing = False
         self.executing = False
         self.game_speed = 13
-        self.x_pos_bg = 0
-        self.x_pos_bg_ter = 0
-        self.x_pos_bg_cloud = 0
-        self.y_pos_bg = -230
-        self.y_pos_bg_ter = 520
-        self.y_pos_bg_cloud = -150
         self.player = Person()
         self.obstacle_manager = ObstacleManager()
         self.flying_manager = Flying_manager()
+        self.backgroun_manager = Background_manager()
+        ########################
+        self.power_up_manager = PowerUpManager()
+        self.pause_menu = Pause()
 
         # Pontuação
         self.score = 0
 
+        self.reset = True
+        self.pause = False
+
     def execute(self):
         self.executing = True
-
         while self.executing:
-            if not self.playing:
+
+            if self.pause_menu.show_menu:
+                self.handle_events_on_menu()
+
+            elif not self.playing:
                 self.show_menu()
 
         pygame.display.quit()
@@ -45,7 +51,9 @@ class Game:
     def run(self):
         # Game loop: events - update - draw
         self.playing = True
-        self.reset_game()
+        if self.reset:
+            self.reset_game()
+
         while self.playing:
             self.events()
             self.update()
@@ -55,6 +63,10 @@ class Game:
         self.score = 0
         self.game_speed = 13
         self.obstacle_manager.obstacles.clear()
+        self.power_up_manager.reset_power_ups()
+        self.flying_manager.list_mosquito.clear()
+        self.player.person_life.cont = 0
+        self.player.life_person = 3
 
     def events(self):
         for event in pygame.event.get():
@@ -63,10 +75,11 @@ class Game:
 
     def update(self):
         user_input = pygame.key.get_pressed()
-        # chamando metodo update do person
         self.player.update(user_input, self)
         self.obstacle_manager.update(self)
         self.flying_manager.update(self)  # chamando update do manager mosquito
+        self.power_up_manager.update(self)
+        self.pause_menu.update(user_input, self)
         self.update_score()
 
     def update_score(self):
@@ -78,13 +91,19 @@ class Game:
     def draw(self):
         self.clock.tick(FPS)
         self.screen.fill((255, 255, 255))
-        self.draw_background()
+
+        self.backgroun_manager.draw_background(self.screen)
 
         self.player.draw(self.screen)  # chamando draw do person
         self.obstacle_manager.draw(self.screen)
         self.flying_manager.draw(self.screen)  # chamando manager do mosquito
+        self.draw_power_up_time()
+        self.power_up_manager.draw(self.screen)
+        self.pause_menu.draw(self.screen, self)
+
         self.draw_score()
 
+        # pygame.display.update()
         pygame.display.update()
         pygame.display.flip()
 
@@ -98,55 +117,26 @@ class Game:
 
         self.screen.blit(text, text_rect)
 
-    ###########
-    '''def draw_background(self):
-        image_width = BG.get_width()
-        self.screen.blit(BG, (self.x_pos_bg, self.y_pos_bg))
-        self.screen.blit(BG, (image_width + self.x_pos_bg, self.y_pos_bg))
-        if self.x_pos_bg <= -image_width:
-            self.screen.blit(BG, (image_width + self.x_pos_bg, self.y_pos_bg))
-            self.x_pos_bg = 0
-        self.x_pos_bg -= self.game_speed'''
+    def draw_power_up_time(self):
+        if self.player.has_power_up:
+            time_to_show = round(
+                (self.player.power_up_time_up - pygame.time.get_ticks())/1000, 2)
 
-    def draw_background(self):
-        self.draw_cloud()
-        self.draw_background_2()
-        self.draw_background_ter()
+            if self.player.type == "default":
+                if time_to_show >= 0:
+                    FONT_STYLE = "freesansbold.ttf"
+                    font = pygame.font.Font(FONT_STYLE, 22)
+                    text = font.render(f"{time_to_show}", True, (0, 0, 0))
 
-    def draw_cloud(self):
-        self.screen.fill((8, 166, 213))
-        image_width = BG_CLOUD.get_width()
-        self.screen.blit(BG_CLOUD, (self.x_pos_bg_cloud, self.y_pos_bg_cloud))
-        self.screen.blit(
-            BG_CLOUD, (image_width + self.x_pos_bg_cloud, self.y_pos_bg_cloud))
-        if self.x_pos_bg_cloud <= -image_width:
-            self.screen.blit(
-                BG_CLOUD, (image_width + self.x_pos_bg_cloud, self.y_pos_bg_cloud))
-            self.x_pos_bg_cloud = 0
-        self.x_pos_bg_cloud -= (self.game_speed / 4)
+                    text_rect = text.get_rect()
+                    text_rect.x = 500
+                    text_rect.y = 50
 
-    def draw_background_ter(self):
-        image_width = BG_TER.get_width()
-        self.screen.blit(BG_TER, (self.x_pos_bg_ter, self.y_pos_bg_ter))
-        self.screen.blit(
-            BG_TER, (image_width + self.x_pos_bg_ter, self.y_pos_bg_ter))
-        if self.x_pos_bg_ter <= -image_width:
-            self.screen.blit(
-                BG_TER, (image_width + self.x_pos_bg_ter, self.y_pos_bg_ter))
-            self.x_pos_bg_ter = 0
-        self.x_pos_bg_ter -= self.game_speed
+                    self.screen.blit(text, text_rect)
 
-    def draw_background_2(self):
-
-        image_width = BG_2.get_width()
-        self.screen.blit(BG_2, (self.x_pos_bg, self.y_pos_bg))
-        self.screen.blit(BG_2, (image_width + self.x_pos_bg, self.y_pos_bg))
-        if self.x_pos_bg <= -image_width:
-            self.screen.blit(
-                BG_2, (image_width + self.x_pos_bg, self.y_pos_bg))
-            self.x_pos_bg = 0
-        self.x_pos_bg -= (self.game_speed / 2)
-    ##############################
+                else:
+                    self.player.has_power_up = False
+                    self.player.type = DEFAULT_TYPE
 
     def show_menu(self):
         self.screen.fill((255, 255, 255))
@@ -156,15 +146,22 @@ class Game:
 
         FONT_STYLE = "freesansbold.ttf"
         font = pygame.font.Font(FONT_STYLE, 22)
-        text = font.render("Press any key to start", True, (0, 0, 0))
+        text = font.render("Press ENTER to start", True, (0, 0, 0))
 
         text_rect = text.get_rect()
         text_rect.center = (half_screen_width, half_screen_height)
         self.screen.blit(text, text_rect)
 
-        self.death_count = "dfsdfsd"
-        text = font.render(f"Death: {self.death_count}", True, (255, 0, 0))
-        text_rect.center = (100, 100)
+        if self.player.life_person > 0:
+            text = font.render(
+                "Press C to continue", True, (0, 0, 0))
+            text_rect.center = (half_screen_width, half_screen_height + 100)
+            self.screen.blit(text, text_rect)
+
+        self.death_count = self.player.life_person
+        text = font.render(
+            f"Remaining Lives: {self.death_count}", True, (0, 0, 0))
+        text_rect.center = (150, 100)
         self.screen.blit(text, text_rect)
 
         pygame.display.flip()
@@ -178,4 +175,13 @@ class Game:
                 self.executing = False
 
             elif event.type == pygame.KEYDOWN:
-                self.run()
+                if event.key == pygame.K_c:
+                    if self.player.life_person > 0:
+                        self.reset = False
+                        self.pause = False
+                        self.run()
+
+                if event.key == pygame.K_KP_ENTER:
+                    self.reset = True
+                    self.pause = False
+                    self.run()

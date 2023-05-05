@@ -28,11 +28,14 @@ class ObstacleManager:
             obstacle.update(game.game_speed, self.obstacles)
 
             if game.player.person_rect.colliderect(obstacle.rect):
-                if self.last_collision_resolved:
-                    self.collisions += 1
-                    print(self.collisions)
-                    game.player.person_life.cont += 1
-                    self.last_collision_resolved = False
+                if not game.player.has_power_up or not game.player.type == "default":
+                    if self.last_collision_resolved:
+                        self.collisions += 1
+                        print(self.collisions)
+                        game.player.person_life.cont += 1
+                        self.last_collision_resolved = False
+                else:
+                    self.obstacles.remove(obstacle)
             else:
                 self.last_collision_resolved = True
 
