@@ -35,7 +35,7 @@ class Game:
         self.reset = True
         self.pause = False
 
-        self.death_count = self.player.life_person
+        self.player_life_person = self.player.life_person
 
     def execute(self):
         self.executing = True
@@ -45,7 +45,7 @@ class Game:
                 self.handle_events_on_menu()
 
             elif not self.playing:
-                self.show_menu()
+                self.pause_menu.show_menu_1(self)
 
         pygame.display.quit()
         pygame.quit()
@@ -140,36 +140,6 @@ class Game:
                     self.player.has_power_up = False
                     self.player.type = DEFAULT_TYPE
 
-    def show_menu(self):
-        self.screen.fill((255, 255, 255))
-
-        half_screen_height = SCREEN_HEIGHT // 2
-        half_screen_width = SCREEN_WIDTH // 2
-
-        FONT_STYLE = "freesansbold.ttf"
-        font = pygame.font.Font(FONT_STYLE, 22)
-        text = font.render("Press ENTER to start", True, (0, 0, 0))
-
-        text_rect = text.get_rect()
-        text_rect.center = (half_screen_width, half_screen_height)
-        self.screen.blit(text, text_rect)
-
-        if self.player.life_person > 0:
-            text = font.render(
-                "Press C to continue", True, (0, 0, 0))
-            text_rect.center = (half_screen_width, half_screen_height + 100)
-            self.screen.blit(text, text_rect)
-
-        self.death_count = self.player.life_person
-        text = font.render(
-            f"Remaining Lives: {self.death_count}", True, (0, 0, 0))
-        text_rect.center = (150, 100)
-        self.screen.blit(text, text_rect)
-
-        pygame.display.flip()
-
-        self.handle_events_on_menu()
-
     def handle_events_on_menu(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -178,10 +148,11 @@ class Game:
 
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_c:
-                    if self.player.life_person > 0:
-                        self.reset = False
-                        self.pause = False
-                        self.run()
+                    if self.pause_menu.show_menu or not self.player.life_person == 3:
+                        if self.player.life_person > 0:
+                            self.reset = False
+                            self.pause = False
+                            self.run()
 
                 if event.key == pygame.K_KP_ENTER:
                     self.reset = True

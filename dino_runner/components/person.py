@@ -52,7 +52,6 @@ class Person:
 
         # ICONS
         self.icons.update(game)
-
         ################ LIFE ######
         self.person_life.damage_life(game)
 
@@ -216,6 +215,7 @@ class Person:
             self.dead_person = False
             self.person_rect.x = 0
             self.life_person -= 1
+            print(self.life_person)
             game.playing = False
 
     def draw(self, screen):

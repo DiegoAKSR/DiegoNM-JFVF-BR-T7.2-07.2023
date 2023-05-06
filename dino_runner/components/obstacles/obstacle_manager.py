@@ -31,7 +31,6 @@ class ObstacleManager:
                 if not game.player.has_power_up or not game.player.type == "default":
                     if self.last_collision_resolved:
                         self.collisions += 1
-                        print(self.collisions)
                         game.player.person_life.cont += 1
                         self.last_collision_resolved = False
                 else:

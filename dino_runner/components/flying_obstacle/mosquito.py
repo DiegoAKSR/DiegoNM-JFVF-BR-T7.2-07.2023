@@ -53,7 +53,6 @@ class Mosquito_per:
             if not game.player.has_power_up or not game.player.type == "default":
                 if self.last_collision_resolved:
                     self.collisions += 1
-                    print(self.collisions)
                     game.player.person_life.cont += 1
                     self.last_collision_resolved = False
 
@@ -66,18 +65,6 @@ class Mosquito_per:
         else:
             self.last_collision_resolved = True
 
-        '''if game.player.person_rect.colliderect(self.mosquito_rect):
-
-            if game.player.person_attack == True:
-
-                print('top')
-
-            else:
-                pass
-                # game.life.cont += 1
-                # pygame.time.delay(10)
-                # game.playing = False
-'''
         if self.steps_count > 5:
             self.steps_count = 0
 

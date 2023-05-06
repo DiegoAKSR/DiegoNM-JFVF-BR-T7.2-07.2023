@@ -112,24 +112,10 @@ JUMPING_LEFT = [
         IMG_DIR, "Dino/Jumper/Jumper_left/JumpF_8.png")),
 ]
 
-JUMPING_SHIELD = pygame.image.load(
-    os.path.join(IMG_DIR, "Dino/DinoJumpShield.png"))
-JUMPING_HAMMER = pygame.image.load(
-    os.path.join(IMG_DIR, "Dino/DinoJumpHammer.png"))
 
 DUCKING = [
     pygame.image.load(os.path.join(IMG_DIR, "Dino/Ducking/Duck.png")),
     pygame.image.load(os.path.join(IMG_DIR, "Dino/Ducking/Duck.png")),
-]
-
-DUCKING_SHIELD = [
-    pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoDuck1Shield.png")),
-    pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoDuck2.png")),
-]
-
-DUCKING_HAMMER = [
-    pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoDuck1Hammer.png")),
-    pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoDuck2.png")),
 ]
 
 
@@ -199,7 +185,7 @@ SHIELD = pygame.image.load(os.path.join(
 ICON_SHIELD = [pygame.image.load(os.path.join(
     IMG_DIR, 'Other/power_up_img/shield.png')),
     pygame.image.load(os.path.join(
-        IMG_DIR, 'Other/power_up_img/no_shield.png')),
+        IMG_DIR, 'Other/power_up_img/shield.png')),
 ]
 
 ICON_LIFE_UP = pygame.image.load(os.path.join(
@@ -236,9 +222,18 @@ DEAD_PERSON = [pygame.image.load(os.path.join(IMG_DIR, 'Dino/Dead/dead_1.png')),
 
                ]
 
+MENU_INICIO = pygame.image.load(os.path.join(
+    IMG_DIR, 'Other/menu/2.png'))
 
 MENU_PAUSE = pygame.image.load(os.path.join(
-    IMG_DIR, 'Other/menu/menu_pause.png'))
+    IMG_DIR, 'Other/menu/menu_pause_1.png'))
+
+
+MENU_PAUSE_DEAD = pygame.image.load(os.path.join(
+    IMG_DIR, 'Other/menu/menu_dead.png'))
+
+MENU_PAUSE_DEAD_0 = pygame.image.load(os.path.join(
+    IMG_DIR, 'Other/menu/menu_dead_0.png'))
 
 DEFAULT_TYPE = "default"
 LIFE_TYPE = "life"
